@@ -3,17 +3,29 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity({name:"users"})
 export class User {
     @PrimaryGeneratedColumn()
-    id: number;
+    user_id!: number;
 
     @Column()
-    name: string;
+    user_name!: string;
 
     @Column()
-    email: string;
+    email!: string;
 
-    constructor(id: number, name: string, email: string) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
+    @Column()
+    phone!: string;
+
+    @Column()
+    street!:string;
+
+    @Column()
+    city!: string;
+
+    // constructor(id: number, name: string, email: string,phone: string,street:string,city: string) {
+    //     this.user_id = id;
+    //     this.user_name = name;
+    //     this.email = email;
+    //     this.phone = phone;
+    //     this.street = street;
+    //     this.city = city;
+    // }
 }
