@@ -1,9 +1,9 @@
 {
   "name": "nodeexp",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
-    "devStart": "nodemon src/index.ts",
+    "devStart": "nodemon src/server.ts",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm",
     "migration:generate": "npm run typeorm -- migration:generate --config src/config/ormconfig.json --connection  --name ",
     "migration:run": "npm run typeorm -- migration:run"

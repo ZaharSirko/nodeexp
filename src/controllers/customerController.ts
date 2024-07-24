@@ -1,15 +1,7 @@
 import { Request, Response } from "express";
-import { DataSource } from "typeorm";
 import { Customer } from "../entity/Customer";
-import config from '../../ormconfig';
+import {AppDataSource} from "../data-source";
 
-const AppDataSource = new DataSource(config);
-
-AppDataSource.initialize().then(() => {
-    console.log("Data Source has been initialized!");
-}).catch((err) => {
-    console.error("Error during Data Source initialization:", err);
-});
 
 const customerRepository = AppDataSource.getRepository(Customer);
 
@@ -21,7 +13,7 @@ export const getCustomers = async (req: Request, res: Response): Promise<Respons
 export const createCustomer = async (req: Request, res: Response): Promise<Response> => {
     const newUser = customerRepository.create(req.body);
     const results = await customerRepository.save(newUser);
-    return res.status(200).json(results);
+    return res.status(201).json(results);
 };
 
 
@@ -32,7 +24,7 @@ export const getCustomerById = async (req: Request, res: Response)=>  {
         }
     });
     if (!customer) return res.status(404).json({ message: 'Customer not found' });
-    res.json(customer);
+    res.status(200).json(customer);
 }
 
 export const updateCustomerById = async (req: Request, res: Response) =>   {
