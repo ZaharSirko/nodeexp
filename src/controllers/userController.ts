@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DataSource } from "typeorm";
-import { User } from "../entity/User";
+import { Customer } from "../entity/Customer";
 import config from '../../ormconfig';
 
 const AppDataSource = new DataSource(config);
@@ -11,7 +11,7 @@ AppDataSource.initialize().then(() => {
     console.error("Error during Data Source initialization:", err);
 });
 
-const userRepository = AppDataSource.getRepository(User);
+const userRepository = AppDataSource.getRepository(Customer);
 
 export const getUsers = async (req: Request, res: Response): Promise<Response> => {
     const users = await userRepository.find();
@@ -23,3 +23,4 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
     const results = await userRepository.save(newUser);
     return res.json(results);
 };
+

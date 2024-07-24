@@ -1,19 +1,36 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+    CreateDateColumn,
+    UpdateDateColumn
+} from "typeorm";
+import { Contracts } from "./Contracts";
 
 @Entity({name:"events"})
 export class Events {
     @PrimaryGeneratedColumn()
     event_id!: number;
 
+    @ManyToOne(() => Contracts)
+    @JoinColumn({ name: 'contract_id' })
+    contract!: Contracts;
+
     @Column()
-    type!: string;
+    event_date!: Date;
+
+    @Column()
+    event_type!: string;
 
     @Column()
     comment!: string;
 
-    // constructor(event_id: number, type: string, comment: string) {
-    //     this.event_id = event_id;
-    //     this.type = type;
-    //     this.comment = comment;
-    // }
+    @CreateDateColumn()
+    created_at!: Date;
+
+    @UpdateDateColumn()
+    updated_at!: Date;
+
 }

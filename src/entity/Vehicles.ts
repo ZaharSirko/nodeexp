@@ -1,37 +1,45 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+    OneToMany,
+    Unique,
+    UpdateDateColumn, CreateDateColumn
+} from "typeorm";
+import {Contracts} from "./Contracts";
 
 @Entity({name:"vehicles"})
+@Unique('vehicles_unique_constraint', ['vin','license_plate'])
 export class Vehicles {
     @PrimaryGeneratedColumn()
     vehicle_id!: number;
 
+    @Column({ unique: true })
+    vin!: string;
+
+    @Column({ unique: true })
+    license_plate!: string;
+
+    @Column()
+    brand!: string;
+
     @Column()
     model!: string;
+    
+    @Column()
+    year!: string;
+    
+    @Column()
+    fuel_type !: string;
 
     @Column()
-    number!: number;
+    power!: number;
 
-    @Column()
-    date!: string;
+    @CreateDateColumn()
+    created_at!: Date;
 
-    @Column()
-    flue_type!: string;
-
-    @Column()
-    engine_power!:string;
-
-    @Column()
-    serial_number!: string;
-
-    // constructor(vehicle_id: number, model: string, number: number, date: string, flue_type: string, engine_power: string, serial_number: string) {
-    //     this.vehicle_id = vehicle_id;
-    //     this.model = model;
-    //     this.number = number;
-    //     this.date = date;
-    //     this.flue_type = flue_type;
-    //     this.engine_power = engine_power;
-    //     this.serial_number = serial_number;
-    // }
-
-
+    @UpdateDateColumn()
+    updated_at!: Date;
 }
