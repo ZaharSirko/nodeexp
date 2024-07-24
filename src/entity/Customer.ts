@@ -8,7 +8,7 @@ export class Customer {
     customer_id!: number;
 
     @Column()
-    user_name!: string;
+    customer_name!: string;
 
     @Column({ unique: true })
     @IsEmail()
