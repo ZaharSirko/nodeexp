@@ -16,7 +16,7 @@ export class Contracts {
     contract_id!: number;
 
     @ManyToOne(() => Customer)
-    @JoinColumn({ name: 'user_id' })
+    @JoinColumn({ name: 'customer_id' })
     customer!: Customer;
   
     @ManyToOne(() => Vehicles)

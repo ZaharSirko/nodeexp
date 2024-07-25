@@ -1,13 +1,7 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
-import express from "express";
-import bodyParser from "body-parser";
-import userRoutes from "./routes/customerRoutes";
-import config from '../ormconfig';
-import vehicleRoutes from "./routes/vehicleRoutes";
 import {AppDataSource} from "./data-source";
+import app from "./app";
 
-const app = express();
 const PORT = 3000;
 
 AppDataSource.initialize().then(() => {
