@@ -35,6 +35,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
 
   /Customers/{id}:
     get:
@@ -120,6 +126,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vehicle'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
 
   /vehicles/{id}:
     get:
@@ -205,6 +218,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
 
   /events/{id}:
     get:
@@ -290,6 +310,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Contract'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
 
   /contracts/{id}:
     get:
@@ -429,3 +456,21 @@ components:
           $ref: '#/components/schemas/Vehicle'
         customer:
           $ref: '#/components/schemas/Customer'
+
+    ValidationError:
+      type: object
+      properties:
+        target:
+          type: object
+        value:
+          type: string
+        property:
+          type: string
+        children:
+          type: array
+          items:
+            type: object
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
