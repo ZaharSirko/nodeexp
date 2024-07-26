@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {Vehicles} from "../entity/Vehicles";
 import {AppDataSource} from "../data-source";
+import {validate} from "class-validator";
 
 
 const vehicleRepository = AppDataSource.getRepository(Vehicles);
@@ -12,6 +13,12 @@ export const getVehicles= async (req: Request, res: Response): Promise<Response>
 
 export const createVehicles = async (req: Request, res: Response)=> {
         const newVehicle = vehicleRepository.create(req.body);
+
+    const errors = await validate(newVehicle);
+    if (errors.length > 0) {
+        return res.status(400).json(errors);
+    }
+
         const vehicle =  vehicleRepository.save(newVehicle);
         return res.status(201).json(vehicle);
     }

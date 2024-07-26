@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import { Events } from '../entity/Events';
 import { AppDataSource } from "../data-source";
+import {validate} from "class-validator";
 
 const eventRepository = AppDataSource.getRepository(Events);
 
@@ -17,6 +18,12 @@ export const getEvents = async (req: Request, res: Response) => {
 export const createEvent = async (req: Request, res: Response) => {
     try {
         const newEvent = eventRepository.create(req.body);
+
+        const errors = await validate(newEvent);
+        if (errors.length > 0) {
+            return res.status(400).json(errors);
+        }
+
         const event = await eventRepository.save(newEvent);
         res.status(201).json(event);
     } catch (error) {

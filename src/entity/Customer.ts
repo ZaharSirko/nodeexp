@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn,} from "typeorm";
-import {IsEmail} from "class-validator"
+import {IsEmail, IsNotEmpty} from "class-validator"
 
 @Entity({name:"users"})
 @Unique('customer_unique_constraint', ['email'])
@@ -8,6 +8,7 @@ export class Customer {
     customer_id!: number;
 
     @Column()
+    @IsNotEmpty()
     customer_name!: string;
 
     @Column({ unique: true })
@@ -15,12 +16,15 @@ export class Customer {
     email!: string;
 
     @Column()
+    @IsNotEmpty()
     phone!: string;
 
     @Column()
+    @IsNotEmpty()
     address!:string;
 
     @Column()
+    @IsNotEmpty()
     city!: string;
 
     @CreateDateColumn()

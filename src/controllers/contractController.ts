@@ -1,10 +1,9 @@
-// src/controllers/ContractController.ts
-
 import { Request, Response } from 'express';
 import { AppDataSource } from '../data-source';
 import { Contracts } from '../entity/Contracts';
 import { Customer } from '../entity/Customer';
 import { Vehicles } from '../entity/Vehicles';
+import {validate} from "class-validator";
 
 const contractRepository = AppDataSource.getRepository(Contracts);
 const userRepository = AppDataSource.getRepository(Customer);
@@ -19,6 +18,12 @@ export const createContract =  async (req: Request, res: Response)=> {
         if (!vehicle) return res.status(404).json({ message: 'Vehicle not found' });
 
     const newContract = contractRepository.create(data);
+
+    const errors = await validate(newContract);
+    if (errors.length > 0) {
+        return res.status(400).json(errors);
+    }
+
     const results = await contractRepository.save(newContract);
 
         res.status(201).json(results);
