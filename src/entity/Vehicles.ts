@@ -2,13 +2,9 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    ManyToOne,
-    JoinColumn,
-    OneToMany,
     Unique,
     UpdateDateColumn, CreateDateColumn
 } from "typeorm";
-import {Contracts} from "./Contracts";
 
 @Entity({name:"vehicles"})
 @Unique('vehicles_unique_constraint', ['vin','license_plate'])
