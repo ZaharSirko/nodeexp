@@ -21,7 +21,7 @@ export const createContract =  async (req: Request, res: Response)=> {
     const newContract = contractRepository.create(data);
     const results = await contractRepository.save(newContract);
 
-        res.status(200).json(results);
+        res.status(201).json(results);
     }
 
 export const getContracts =   async (req: Request, res: Response)=> {
