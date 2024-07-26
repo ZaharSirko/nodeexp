@@ -19,8 +19,9 @@ export const createContract =  async (req: Request, res: Response)=> {
         if (!vehicle) return res.status(404).json({ message: 'Vehicle not found' });
 
     const newContract = contractRepository.create(data);
+    const results = await contractRepository.save(newContract);
 
-        res.status(200).json(newContract);
+        res.status(200).json(results);
     }
 
 export const getContracts =   async (req: Request, res: Response)=> {
@@ -41,7 +42,7 @@ export const getContractById =    async (req: Request, res: Response)=> {
     }
 
 export const updateContractById =    async (req: Request, res: Response)=> {
-        const { duration, startDate, endDate, totalPrice, customerPricePerMonth, odometerAtExpiration, startMileage } = req.body;
+    const data = req.body;
     const contract = await contractRepository.findOne({
         where: {
             contract_id: parseInt(req.params.id),
@@ -51,13 +52,13 @@ export const updateContractById =    async (req: Request, res: Response)=> {
     })
         if (!contract) return res.status(404).json({ message: 'Contract not found' });
 
-        contract.duration = duration;
-        contract.start_date = startDate;
-        contract.end_date = endDate;
-        contract.total_price = totalPrice;
-        contract.price_month = customerPricePerMonth;
-        contract.odometer = odometerAtExpiration;
-        contract.start_mileage = startMileage;
+        contract.duration = data.duration;
+        contract.start_date = data.start_date;
+        contract.end_date = data.end_date;
+        contract.total_price = data.total_price;
+        contract.price_month = data.price_month;
+        contract.odometer = data.odometer;
+        contract.start_mileage = data.start_mileage;
 
         await contractRepository.save(contract);
         res.status(200).json(contract);

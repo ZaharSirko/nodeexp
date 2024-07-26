@@ -28,7 +28,7 @@ export const getVehicleById = async (req: Request, res: Response) => {
     }
 
 export const updateVehicleById  = async (req: Request, res: Response)=> {
-        const { license_plate, vin, brand, model, year, fuel_type, power } = req.body;
+        const data = req.body;
         const vehicle = await vehicleRepository.findOne({
         where: {
             vehicle_id: parseInt(req.params.id)
@@ -36,13 +36,13 @@ export const updateVehicleById  = async (req: Request, res: Response)=> {
        });
         if (!vehicle) return res.status(404).json({ message: 'Vehicle not found' });
 
-        vehicle.license_plate = license_plate;
-        vehicle.vin = vin;
-        vehicle.brand = brand;
-        vehicle.model = model;
-        vehicle.year = year;
-        vehicle.fuel_type = fuel_type;
-        vehicle.power = power;
+        vehicle.license_plate = data.license_plate;
+        vehicle.vin = data.vin;
+        vehicle.brand = data.brand;
+        vehicle.model = data.model;
+        vehicle.year = data.year;
+        vehicle.fuel_type = data.fuel_type;
+        vehicle.power = data.power;
 
         await vehicleRepository.save(vehicle);
     return res.status(200).json(vehicle);

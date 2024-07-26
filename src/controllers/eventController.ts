@@ -39,17 +39,17 @@ export const getEventById = async (req: Request, res: Response) => {
 
 export const updateEventById = async (req: Request, res: Response) => {
     try {
-        const { contract, event_date, event_type, comment } = req.body;
+        const data = req.body;
         const event = await eventRepository.findOne({
             where: { event_id: parseInt(req.params.id) },
             relations: ['contract']
         });
         if (!event) return res.status(404).json({ message: 'Event not found' });
 
-        event.contract = contract;
-        event.event_date = event_date;
-        event.event_type = event_type;
-        event.comment = comment;
+        event.contract = data.contract;
+        event.event_date = data.event_date;
+        event.event_type = data.event_type;
+        event.comment = data.comment;
 
         await eventRepository.save(event);
         res.status(200).json(event);

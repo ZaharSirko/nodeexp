@@ -28,7 +28,7 @@ export const getCustomerById = async (req: Request, res: Response)=>  {
 }
 
 export const updateCustomerById = async (req: Request, res: Response) =>   {
-    const { name, email, phone, address, city } = req.body;
+    const data = req.body;
     const customer = await customerRepository.findOne({
         where: {
             customer_id: parseInt(req.params.id)
@@ -36,11 +36,11 @@ export const updateCustomerById = async (req: Request, res: Response) =>   {
     });
     if (!customer) return res.status(404).json({ message: 'Customer not found' });
 
-    customer.customer_name = name;
-    customer.email = email;
-    customer.phone = phone;
-    customer.address = address;
-    customer.city = city;
+    customer.customer_name = data.customer_name;
+    customer.email = data.email;
+    customer.phone = data.phone;
+    customer.address = data.address;
+    customer.city = data.city;
 
     await customerRepository.save(customer);
     res.status(200).json(customer);
